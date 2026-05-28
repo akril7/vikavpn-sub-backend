@@ -88,7 +88,7 @@ server {
     server_name ${DOMAIN};
 
     ssl_certificate /etc/ssl/certs/vikavikavika.ru;
-    ssl_certificate_key /etc/ssl/private/vikavikavika.ru
+    ssl_certificate_key /etc/ssl/private/vikavikavika.ru;
 
     location /sub/ {
         proxy_pass http://127.0.0.1:5000;
