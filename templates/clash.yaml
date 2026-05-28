@@ -1,0 +1,71 @@
+tun:
+  enable: false
+  stack: mixed
+  dns-hijack:
+    - any:53
+  auto-route: true
+  auto-detect-interface: true
+
+dns:
+  enable: true
+  ipv6: false
+  enhanced-mode: redir-host
+
+  nameserver:
+    - 1.1.1.1
+    - 8.8.8.8
+    - system
+
+  fallback:
+    - https://1.1.1.1/dns-query
+    - https://8.8.8.8/dns-query
+
+proxies:
+  - name: proxy443
+    type: mieru
+    server: {SERVER}
+    port: 443
+    transport: TCP
+
+    username: {USERNAME}
+    password: {PASSWORD}
+
+    multiplexing: MULTIPLEXING_LOW
+
+  - name: proxy
+    type: trusttunnel
+    server: {SERVER}
+    port: 8443
+
+    sni: apple.com
+
+    username: {USERNAME}
+    password: {PASSWORD}
+
+    udp: true
+    skip-cert-verify: true
+    quic: true
+    health-check: true
+
+rules:
+  - GEOSITE,facebook,proxy
+  - GEOIP,facebook,proxy,no-resolve
+  - GEOSITE,instagram,proxy
+  - GEOSITE,spotify,proxy
+
+  - GEOSITE,openai,proxy
+  - DOMAIN-KEYWORD,chatgpt,proxy
+
+  - GEOSITE,tiktok,proxy443
+  - GEOSITE,twitch,proxy
+  - GEOSITE,discord,proxy
+  - GEOSITE,youtube,proxy
+  - GEOSITE,cloudflare,proxy
+  - GEOSITE,telegram,proxy
+  - GEOIP,telegram,proxy,no-resolve
+  - GEOSITE,supercell,proxy
+  - GEOSITE,github,proxy
+
+  - GEOSITE,category-ads-all,REJECT
+
+  - MATCH,DIRECT
