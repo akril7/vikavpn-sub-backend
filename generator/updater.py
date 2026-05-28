@@ -1,4 +1,5 @@
 import subprocess
+from pathlib import Path
 
 from generators.trusttunnel import generate_trusttunnel
 from generators.mieru import generate_mieru
@@ -25,6 +26,8 @@ def read_creds(creds_path: str):
 
 
 def update(creds_path: str):
+    Path("data").mkdir(parents=True, exist_ok=True)
+
     creds = read_creds(creds_path)
     generate_trusttunnel(creds)
     generate_mieru(creds)
