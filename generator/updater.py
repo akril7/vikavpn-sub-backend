@@ -1,5 +1,8 @@
+import os.path
 import subprocess
 from pathlib import Path
+
+os.chdir(Path(__file__).resolve())
 
 from generators.trusttunnel import generate_trusttunnel
 from generators.mieru import generate_mieru
@@ -25,13 +28,15 @@ def read_creds(creds_path: str):
     return creds
 
 
-def update(creds_path: str):
-    Path("data").mkdir(parents=True, exist_ok=True)
+def update():
+    if not os.path.exists("credentials"):
+        print("ERROR: please create credentials file and fill login:passowrd like on every line")
+        return
 
-    creds = read_creds(creds_path)
+    creds = read_creds("")
     generate_trusttunnel(creds)
-    generate_mieru(creds)
     generate_clash(creds)
+    generate_mieru(creds)
 
     subprocess.run(
         ["systemctl", "restart", "trusttunnel"],
