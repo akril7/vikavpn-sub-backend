@@ -3,4 +3,4 @@
 set -e
 
 cd /opt/vikavpn-sub-backend
-./venv/bin/python -c "from generator.updater import update; update('credentials')"
+./.venv/bin/python -c "from generator.updater import update; update('credentials')"
