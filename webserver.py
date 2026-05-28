@@ -1,4 +1,9 @@
+import os
+from pathlib import Path
+
 from flask import Flask, send_file, abort
+
+os.chdir(Path(__file__).parent.resolve())
 
 app = Flask(__name__)
 
