@@ -2,7 +2,7 @@ import os.path
 import subprocess
 from pathlib import Path
 
-os.chdir(Path(__file__).resolve())
+os.chdir(Path(__file__).parent.resolve())
 
 from generators.trusttunnel import generate_trusttunnel
 from generators.mieru import generate_mieru
