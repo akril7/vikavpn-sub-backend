@@ -5,6 +5,8 @@ from .backends.trusttunnel import setup_trusttunnel
 from .backends.clash import create_clash_configs
 from .backends.mieru import setup_mieru
 
+from .users import load_users
+
 from . import config
 
 os.chdir(Path(__file__).parent.resolve())
@@ -16,8 +18,6 @@ setup_mieru(config.CREDENTIALS)
 print()
 print("=== Subscription Links ===")
 print()
-
-from users import load_users
 
 users = load_users()
 

@@ -9,7 +9,7 @@ def setup_mieru(credentials):
     with open("templates/mita.json") as f:
         config = json.load(f)
 
-    for username, password in credentials.item():
+    for username, password in credentials.items():
         config["users"].append({
             "name": username,
             "password": password
@@ -18,5 +18,5 @@ def setup_mieru(credentials):
     with open("data/mita.json", "w") as f:
         json.dump(config, f, indent=4)
 
-    subprocess.run(["mita", "apply", "config", "data/mita.toml"])
+    subprocess.run(["mita", "apply", "config", "data/mita.json"])
     subprocess.run(["systemctl", "restart", "mita"])
