@@ -33,7 +33,7 @@ def update():
         print("ERROR: please create credentials file and fill login:passowrd like on every line")
         return
 
-    creds = read_creds("")
+    creds = read_creds("credentials")
     generate_trusttunnel(creds)
     generate_clash(creds)
     generate_mieru(creds)

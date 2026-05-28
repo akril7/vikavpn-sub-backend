@@ -118,8 +118,8 @@ systemctl restart nginx
 echo
 echo "[8/9] Creating credentials file..."
 
-if [ ! -f "${INSTALL_DIR}/credentials" ]; then
-cat > "${INSTALL_DIR}/credentials" << EOF
+if [ ! -f "${INSTALL_DIR}/generator/credentials" ]; then
+cat > "${INSTALL_DIR}/generator/credentials" << EOF
 changeme-login:changeme-password
 EOF
 fi
@@ -138,7 +138,7 @@ echo "Backend directory:"
 echo "${INSTALL_DIR}"
 echo
 echo "Edit credentials:"
-echo "${INSTALL_DIR}/credentials"
+echo "${INSTALL_DIR}/generator/credentials"
 echo
 echo "Generate subscriptions:"
 echo "cd ${INSTALL_DIR} && ./update-creds.sh"
