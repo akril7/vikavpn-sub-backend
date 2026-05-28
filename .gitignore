@@ -1,11 +1,7 @@
-venv/
+.idea
+.venv/
 __pycache__/
 *.pyc
 
-data/creds
-data/users.json
-data/subscriptions/
-
-data/mita.json
-
-.env
+generator/data
+credentials

@@ -1,13 +1,11 @@
 from flask import Flask, send_file, abort
 
-from config import SUBS_DIR
-
 app = Flask(__name__)
 
 
 @app.route("/sub/<uid>")
 def sub(uid):
-    path = f"{SUBS_DIR}/{uid}.yaml"
+    path = f"generator/data/subs/{uid}.yaml"
 
     try:
         return send_file(

@@ -1,15 +1,15 @@
 from pathlib import Path
 
-from config import SUBS_DIR, SERVER_IP
-from models.users import get_or_create_uid
+from config import SERVER
+from users import get_or_create_uid
 
-TEMPLATE_PATH = "/opt/sub-backend/templates/clash.yaml"
+SUBS_DIR = "data/subs"
 
 
 def generate_clash(creds):
     Path(SUBS_DIR).mkdir(parents=True, exist_ok=True)
 
-    with open(TEMPLATE_PATH, "r") as f:
+    with open("templates/clash.yaml", "r") as f:
         template = f.read()
 
     generated = []
@@ -20,7 +20,7 @@ def generate_clash(creds):
         content = template \
             .replace("{USERNAME}", username) \
             .replace("{PASSWORD}", password) \
-            .replace("{SERVER}", SERVER_IP)
+            .replace("{SERVER}", SERVER)
 
         path = f"{SUBS_DIR}/{uid}.yaml"
 

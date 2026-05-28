@@ -2,7 +2,7 @@ import json
 import uuid
 from pathlib import Path
 
-from config import USERS_FILE
+USERS_FILE = "data/users.json"
 
 
 def load_users():

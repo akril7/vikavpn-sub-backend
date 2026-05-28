@@ -4,13 +4,13 @@ from generators.trusttunnel import generate_trusttunnel
 from generators.mieru import generate_mieru
 from generators.clash import generate_clash
 
-from config import CREDS_FILE, DOMAIN, MIERU_TEMP_CONFIG
+from config import DOMAIN
 
 
-def read_creds():
+def read_creds(creds_path: str):
     creds = []
 
-    with open(CREDS_FILE, "r") as f:
+    with open(creds_path, "r") as f:
         for line in f:
             line = line.strip()
 
@@ -24,13 +24,10 @@ def read_creds():
     return creds
 
 
-def update():
-    creds = read_creds()
-
+def update(creds_path: str):
+    creds = read_creds(creds_path)
     generate_trusttunnel(creds)
-
     generate_mieru(creds)
-
     generate_clash(creds)
 
     subprocess.run(
@@ -39,7 +36,7 @@ def update():
     )
 
     subprocess.run(
-        ["mita", "apply", "config", MIERU_TEMP_CONFIG],
+        ["mita", "apply", "config", "data/mita.toml"],
         check=True
     )
 
@@ -52,9 +49,9 @@ def update():
     print("=== Subscription Links ===")
     print()
 
-    from models.users import load_users
+    from users import load_users
 
     users = load_users()
 
     for username, uid in users.items():
-        print(f"{username}: {DOMAIN}/sub/{uid}")
+        print(f"{username}: https://{DOMAIN}/sub/{uid}")
