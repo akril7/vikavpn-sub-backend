@@ -1,12 +1,11 @@
 from pathlib import Path
 
-from config import SERVER
-from users import get_or_create_uid
+from ..users import get_or_create_uid
 
 SUBS_DIR = "data/subs"
 
 
-def generate_clash(creds):
+def create_clash_configs(server, credentials):
     Path(SUBS_DIR).mkdir(parents=True, exist_ok=True)
 
     with open("templates/clash.yaml", "r") as f:
@@ -14,13 +13,13 @@ def generate_clash(creds):
 
     generated = []
 
-    for username, password in creds:
+    for username, password in credentials.items():
         uid = get_or_create_uid(username)
 
         content = template \
             .replace("{USERNAME}", username) \
             .replace("{PASSWORD}", password) \
-            .replace("{SERVER}", SERVER)
+            .replace("{SERVER}", server)
 
         path = f"{SUBS_DIR}/{uid}.yaml"
 
