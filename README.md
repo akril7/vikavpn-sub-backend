@@ -46,12 +46,17 @@ WantedBy=multi-user.target
 ```
 
 4. Edit configs
-clash
+server data
+```
+nano generator/config.py
+```
+
+clash template
 ```
 nano generator/templates/clash.yaml
 ```
 
-mieru
+mieru template
 ```
 nano generator/templates/mieru.json
 ```
