@@ -3,7 +3,8 @@ from pathlib import Path
 
 from .backends.trusttunnel import setup_trusttunnel
 from .backends.clash import create_clash_configs
-from .backends.mieru import setup_mieru
+from .backends.mita import setup_mita
+from .backends.xray import setup_xray
 
 from .users import load_users
 
@@ -13,13 +14,13 @@ os.chdir(Path(__file__).parent.resolve())
 
 create_clash_configs(config.SERVER, config.CREDENTIALS)
 setup_trusttunnel(config.CREDENTIALS)
-setup_mieru(config.CREDENTIALS)
+setup_mita(config.CREDENTIALS)
+setup_xray(config.CREDENTIALS)
 
-print()
 print("=== Subscription Links ===")
 print()
 
 users = load_users()
 
-for username, uid in users.items():
-    print(f"{username}: https://{config.DOMAIN}/sub/{uid}")
+for username, uuid in users.items():
+    print(f"{username}: https://{config.DOMAIN}/sub/{uuid}")

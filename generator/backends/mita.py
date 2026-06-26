@@ -3,7 +3,7 @@ import subprocess
 from pathlib import Path
 
 
-def setup_mieru(credentials):
+def setup_mita(credentials):
     Path('data').mkdir(parents=True, exist_ok=True)
 
     with open("templates/mita.json") as f:

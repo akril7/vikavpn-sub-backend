@@ -14,18 +14,18 @@ def create_clash_configs(server, credentials):
     generated = []
 
     for username, password in credentials.items():
-        uid = get_or_create_uid(username)
+        uuid = get_or_create_uid(username)
 
         content = template \
             .replace("{USERNAME}", username) \
             .replace("{PASSWORD}", password) \
             .replace("{SERVER}", server)
 
-        path = f"{SUBS_DIR}/{uid}.yaml"
+        path = f"{SUBS_DIR}/{uuid}.yaml"
 
         with open(path, "w") as out:
             out.write(content)
 
-        generated.append((username, uid))
+        generated.append((username, uuid))
 
     return generated

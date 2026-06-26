@@ -1,6 +1,6 @@
 # VPN Subscription backend
 
-**Program manage miero and trusttunnel endpoint, config use clash format**
+**Program manage miero, xray and trusttunnel endpoint, config use clash format**
 
 
 ### Install
@@ -58,7 +58,12 @@ nano generator/templates/clash.yaml
 
 mieru template
 ```
-nano generator/templates/mieru.json
+nano generator/templates/mita.json
+```
+
+xray template
+```
+nano generator/templates/xray.json
 ```
 
 5. Get links
