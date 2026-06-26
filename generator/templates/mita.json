@@ -5,7 +5,7 @@
       "protocol": "UDP"
     }
   ],
-  "users": [],
+  "users": ["EDIT-BY-PROGRAM"],
   "loggingLevel": "INFO",
   "mtu": 1400
 }

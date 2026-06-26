@@ -12,7 +12,7 @@ from . import config
 
 os.chdir(Path(__file__).parent.resolve())
 
-create_clash_configs(config.SERVER, config.CREDENTIALS)
+create_clash_configs(config.SERVER, config.CREDENTIALS, config.XRAY_PUBLIC_KEY)
 setup_trusttunnel(config.CREDENTIALS)
 setup_mita(config.CREDENTIALS)
 setup_xray(config.CREDENTIALS)

@@ -5,7 +5,7 @@ from pathlib import Path
 from ..users import get_or_create_uid
 
 
-def setup_xray(credentials):
+def setup_xray(credentials, xray_privkey):
     Path('data').mkdir(parents=True, exist_ok=True)
 
     clients = [{"id": get_or_create_uid(username), "flow": "xtls-rprx-vision"} for username in credentials.keys]
@@ -14,7 +14,9 @@ def setup_xray(credentials):
         config = json.load(f)
 
     for inbound in config["inbounds"]:
-        inbound["settings"]["clients"] = clients
+        settings = inbound["settings"]
+        settings["clients"] = clients
+        settings["streamSettings"]["realitySettings"]["privateKey"] = xray_privkey
 
     with open("/usr/local/etc/xray/config.json", "w") as f:
         json.dump(config, f, indent=4)

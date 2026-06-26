@@ -46,17 +46,17 @@ WantedBy=multi-user.target
 ```
 
 4. Edit configs
-server data
+server data (required)
 ```
 nano generator/config.py
 ```
 
-MUST EDIT public-key in reality settings of clash template
+clash template
 ```
 nano generator/templates/clash.yaml
 ```
 
-MUST EDIT private-key in reality settings of xray template
+xray template
 ```
 nano generator/templates/xray.json
 ```

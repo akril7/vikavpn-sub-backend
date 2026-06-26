@@ -5,7 +5,7 @@ from ..users import get_or_create_uid
 SUBS_DIR = "data/subs"
 
 
-def create_clash_configs(server, credentials):
+def create_clash_configs(server, credentials, xray_pubkey):
     Path(SUBS_DIR).mkdir(parents=True, exist_ok=True)
 
     with open("templates/clash.yaml", "r") as f:
@@ -20,7 +20,8 @@ def create_clash_configs(server, credentials):
             .replace("{UUID}", uuid) \
             .replace("{USERNAME}", username) \
             .replace("{PASSWORD}", password) \
-            .replace("{SERVER}", server)
+            .replace("{SERVER}", server) \
+            .replace("{REALITY-PUBLIC-KEY}", xray_pubkey)
 
         path = f"{SUBS_DIR}/{uuid}.yaml"
 

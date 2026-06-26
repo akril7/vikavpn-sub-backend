@@ -29,7 +29,7 @@ proxies:
     tls: true
     udp: true
     reality-opts:
-      public-key: NEW-PUBLIC-KEY
+      public-key: {REALITY-PUBLIC-KEY}
       short-id: ""
     servername: www.github.com
     client-fingerprint: chrome
