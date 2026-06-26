@@ -1,71 +1,160 @@
-tun:
-  enable: false
-  stack: mixed
-  dns-hijack:
-    - any:53
-  auto-route: true
-  auto-detect-interface: true
+tcp-concurrent: true
+keep-alive-interval: 60
+keep-alive-idle: 120
+disable-keep-alive: false
 
 dns:
   enable: true
   ipv6: false
-  enhanced-mode: redir-host
-
+  prefer-h3: true
+  enhanced-mode: fake-ip
+  dns-hijack: []
   nameserver:
-    - 1.1.1.1
-    - 8.8.8.8
-    - system
-
-  fallback:
-    - https://1.1.1.1/dns-query
     - https://8.8.8.8/dns-query
+    - https://1.1.1.1/dns-query
+  default-nameserver:
+    - https://8.8.8.8/dns-query
+    - https://1.1.1.1/dns-query
+  proxy-server-nameserver:
+    - https://8.8.8.8/dns-query
+    - https://1.1.1.1/dns-query
 
 proxies:
-  - name: proxy443
-    type: mieru
+  - name: 443-tcp
+    type: vless
     server: {SERVER}
     port: 443
-    transport: TCP
+    uuid: {UUID}
+    network: tcp
+    tls: true
+    udp: true
+    reality-opts:
+      public-key: NEW-PUBLIC-KEY
+      short-id: ""
+    servername: www.github.com
+    client-fingerprint: chrome
+    flow: xtls-rprx-vision
 
+  - name: mieru-udp
+    type: mieru
+    server: {SERVER}
+    port-range: "10000-10255"
+    transport: UDP
+    multiplexing: MULTIPLEXING_LOW
+    udp: true
     username: {USERNAME}
     password: {PASSWORD}
 
-    multiplexing: MULTIPLEXING_LOW
-
-  - name: proxy
+  - name: trust-http2
     type: trusttunnel
     server: {SERVER}
     port: 8443
-
-    sni: apple.com
-
+    sni: {SERVER}
+    udp: true
+    skip-cert-verify: false
+    quic: false
+    health-check: true
     username: {USERNAME}
     password: {PASSWORD}
 
+  - name: trust-http3
+    type: trusttunnel
+    server: {SERVER}
+    port: 8443
+    sni: {SERVER}
     udp: true
-    skip-cert-verify: true
+    skip-cert-verify: false
     quic: true
     health-check: true
+    username: {USERNAME}
+    password: {PASSWORD}
+
+proxy-groups:
+  - name: PROXY
+    type: fallback
+    proxies:
+    - 443-tcp
+    - proxy-trust
+    - mieru-udp
+    url: 'https://www.gstatic.com/generate_204'
+    interval: 900
+    lazy: false
+
+  - name: proxy-trust
+    type: fallback
+    proxies:
+    - trust-http2
+    - trust-http3
+    url: 'https://www.gstatic.com/generate_204'
+    interval: 0
+    lazy: false
+    hidden: true
 
 rules:
-  - GEOSITE,facebook,proxy
-  - GEOIP,facebook,proxy,no-resolve
-  - GEOSITE,instagram,proxy
-  - GEOSITE,spotify,proxy
-
-  - GEOSITE,openai,proxy
-  - DOMAIN-KEYWORD,chatgpt,proxy
-
-  - GEOSITE,tiktok,proxy443
-  - GEOSITE,twitch,proxy
-  - GEOSITE,discord,proxy
-  - GEOSITE,youtube,proxy
-  - GEOSITE,cloudflare,proxy
-  - GEOSITE,telegram,proxy
-  - GEOIP,telegram,proxy,no-resolve
-  - GEOSITE,supercell,proxy
-  - GEOSITE,github,proxy
+  - GEOSITE,tiktok,443-tcp
+  - GEOSITE,facebook,PROXY
+  - GEOSITE,instagram,PROXY
+  - GEOSITE,openai,PROXY
+  - DOMAIN-KEYWORD,chatgpt,PROXY
+  - GEOSITE,discord,PROXY
+  - GEOSITE,youtube,PROXY
+  - GEOSITE,cloudflare,PROXY
+  - GEOSITE,telegram,PROXY
+  - GEOIP,telegram,PROXY,no-resolve
+  - IP-CIDR,194.221.250.50/32,PROXY,no-resolve
+  - GEOSITE,supercell,PROXY
+  - GEOIP,supercell,PROXY,no-resolve
+  - GEOSITE,github,PROXY
+  - GEOSITE,google,PROXY
 
   - GEOSITE,category-ads-all,REJECT
+  - DOMAIN-SUFFIX,betweendigital.com,REJECT
+  - DOMAIN-SUFFIX,al-adtech.com,REJECT
+  - DOMAIN-SUFFIX,acint.net,REJECT
+  - DOMAIN-SUFFIX,nominaltechno.com,REJECT
+  - DOMAIN-SUFFIX,buzzoola.com,REJECT
+  - DOMAIN-SUFFIX,programmatica.com,REJECT
+  - DOMAIN-SUFFIX,hybrid.a,REJECT
+  - DOMAIN-SUFFIX,gonet-ads.com,REJECT
+  - DOMAIN-SUFFIX,giraff.io,REJECT
+  - DOMAIN-SUFFIX,adiam.tech,REJECT
+  - DOMAIN-SUFFIX,suprion.ru,REJECT
+  - DOMAIN-SUFFIX,ohmy.bid,REJECT
+  - DOMAIN-SUFFIX,adhigh.net,REJECT
+  - DOMAIN-SUFFIX,ussp.io,REJECT
+  - DOMAIN-SUFFIX,bidster.net,REJECT
+  - DOMAIN-SUFFIX,gonet-ads.com,REJECT
+  - DOMAIN-SUFFIX,adtec.ru,REJECT
+  - DOMAIN-SUFFIX,adriver.ru,REJECT
+  - DOMAIN-SUFFIX,video-mech.ru,REJECT
+  - DOMAIN-SUFFIX,bidderstack.com,REJECT
+  - DOMAIN-SUFFIX,nashindex.ru,REJECT
+  - DOMAIN-SUFFIX,utraff.com,REJECT
+  - DOMAIN-SUFFIX,stbid.ru,REJECT
+  - DOMAIN-SUFFIX,sm.rtb.mts.ru,REJECT
+  - DOMAIN-SUFFIX,bringads.ru,REJECT
+  - DOMAIN-SUFFIX,otclick-adv.ru,REJECT
+  - DOMAIN-SUFFIX,ussp.io,REJECT
+  - DOMAIN-SUFFIX,otm-r.com,REJECT
+  - DOMAIN-SUFFIX,adspector.io,REJECT
+  - DOMAIN-SUFFIX,silvermob.com,REJECT
+  - DOMAIN-SUFFIX,aidata.io,REJECT
+  - DOMAIN-SUFFIX,com.ru,REJECT
+  - DOMAIN-SUFFIX,bumlam.com,REJECT
+  - DOMAIN-SUFFIX,digitaltarget.ru,REJECT
+  - DOMAIN-SUFFIX,uuidksinc.net,REJECT
+  - DOMAIN-SUFFIX,tds.bid,REJECT
+  - DOMAIN-SUFFIX,alfasense.com,REJECT
+  - DOMAIN-SUFFIX,moe.video,REJECT
+  - DOMAIN-SUFFIX,videoroll.net,REJECT
+  - DOMAIN-SUFFIX,avr.i-trailer.ru,REJECT
+  - DOMAIN-SUFFIX,skcrtxr.com,REJECT
+  - DOMAIN-SUFFIX,upravel.com,REJECT
+  - DOMAIN-SUFFIX,sttsmntz.ru,REJECT
+  - DOMAIN-SUFFIX,snsv.ru,REJECT
+  - DOMAIN-SUFFIX,atddmn.com,REJECT
+  - DOMAIN-SUFFIX,franecki.net,REJECT
+  - DOMAIN-SUFFIX,dfn-network.pro,REJECT
+  - DOMAIN-SUFFIX,nogravity4.click,REJECT
 
   - MATCH,DIRECT

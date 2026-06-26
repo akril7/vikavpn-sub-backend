@@ -51,22 +51,24 @@ server data
 nano generator/config.py
 ```
 
-clash template
+MUST EDIT public-key in reality settings of clash template
 ```
 nano generator/templates/clash.yaml
 ```
 
-mieru template
-```
-nano generator/templates/mita.json
-```
-
-xray template
+MUST EDIT private-key in reality settings of xray template
 ```
 nano generator/templates/xray.json
+```
+
+mita template
+```
+nano generator/templates/mita.json
 ```
 
 5. Get links
 ```
 python -m generator
 ```
+
+6. Setup nginx for access from **SUB_DOMAIN** to **127.0.0.1:5000**

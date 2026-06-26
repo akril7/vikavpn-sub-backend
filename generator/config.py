@@ -2,8 +2,8 @@ print("EDIT generator/config.py")
 exit(-1)
 
 # EDIT THIS
-DOMAIN = "yourdomain.com"
-SERVER = "server_ip_or_domain"
+SUB_DOMAIN = "yourdomain.com"
+SERVER = "server_domain"
 CREDENTIALS = {
     "koz": 'koz123'
 }

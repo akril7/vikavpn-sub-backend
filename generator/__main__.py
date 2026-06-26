@@ -23,4 +23,4 @@ print()
 users = load_users()
 
 for username, uuid in users.items():
-    print(f"{username}: https://{config.DOMAIN}/sub/{uuid}")
+    print(f"{username}: https://{config.SUB_DOMAIN}/sub/{uuid}")

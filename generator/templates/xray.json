@@ -18,7 +18,7 @@
           "dest": "www.github.com:443",
           "xver": 0,
           "serverNames": ["www.github.com"],
-          "privateKey": "QGWZlIhTn1BRVEgTy1v1CWMeM2k23Ynd1tYY1oDYM2A",
+          "privateKey": "NEW-PRIVATE-KEY",
           "shortIds": [""]
         }
       }

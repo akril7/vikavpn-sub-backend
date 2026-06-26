@@ -1,8 +1,8 @@
 {
   "portBindings": [
     {
-      "port": 443,
-      "protocol": "TCP"
+      "portRange": "10000-10255",
+      "protocol": "UDP"
     }
   ],
   "users": [],

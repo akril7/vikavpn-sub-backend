@@ -17,6 +17,7 @@ def create_clash_configs(server, credentials):
         uuid = get_or_create_uid(username)
 
         content = template \
+            .replace("{UUID}", uuid) \
             .replace("{USERNAME}", username) \
             .replace("{PASSWORD}", password) \
             .replace("{SERVER}", server)
